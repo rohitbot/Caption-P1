@@ -8,19 +8,18 @@ from Uitilites import data_source
 class TestLogin(WebDriverWrapper):
 
     def test_valid_login(self):
-        self.driver.find_element(By.ID, "user_email").send_keys("princy@jain.com")
-        self.driver.find_element(By.ID, "user_password").send_keys("padmakshi123")
+        self.driver.find_element(By.ID, "user_email").send_keys("rohit@beheraemail.com")
+        self.driver.find_element(By.ID, "user_password").send_keys("bot123")
         self.driver.find_element(By.XPATH, "(//button[normalize-space()='Sign In'])").click()
         actual_text = self.driver.find_element(By.XPATH, "//h1[normalize-space()='Selenium']").text
         assert_that("Selenium").is_equal_to(actual_text)
 
-    @pytest.mark.parametrize("usereamil,password,expected_error", data_source.test_invalid_login_data)
-    def test_invalid_login(self, usereamil, password, expected_error):
-        self.driver.find_element(By.ID, "user_email").send_keys(usereamil)
+    @pytest.mark.parametrize("usermail,password,expected_error", data_source.test_invalid_login_data)
+    def test_invalid_login(self, useremail, password, expected_error):
+        self.driver.find_element(By.ID, "user_email").send_keys(useremail)
         self.driver.find_element(By.ID, "user_password").send_keys(password)
         self.driver.find_element(By.XPATH, "(//button[normalize-space()='Sign In'])").click()
         actual_error = self.driver.find_element(By.XPATH, "//p[@class='field__message']").text
-        # print(actual_error)
         assert_that(expected_error).is_equal_to(actual_error)
 
 
